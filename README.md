@@ -4,4 +4,4 @@ curl -O https://raw.githubusercontent.com/Mr-Robot-ops/theme_install/main/instal
 
 # theme_uninstall
 
-curl -O https://raw.githubusercontent.com/Mr-Robot-ops/theme_install/main/uninstall.sh && chmod +x uninstall.sh && sudo ./uninstall.sh
+curl -O https://github.com/Mr-Robot-ops/theme_install/blob/main/uninstall.sh && chmod +x uninstall.sh && sudo ./uninstall.sh
