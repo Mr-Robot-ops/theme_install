@@ -60,6 +60,7 @@ set -g fish_pager_color_selected_background -r
 set -gx TERMINAL xterm
 set -g theme_nerd_fonts yes
 set -gx PATH /snap/bin $PATH
+set -gx PATH $PATH /root/bin
 #set -x LANG de_DE.UTF-8
 #set -x LC_ALL de_DE.UTF-8
 set -g LANG C.UTF-8
