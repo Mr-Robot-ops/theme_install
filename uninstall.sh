@@ -13,34 +13,66 @@ FISH_CONFIG_DIR="$HOME/.config/fish"
 
 # Entfernen der Oh My Posh-Installation
 echo "Entferne Oh My Posh..."
-sudo rm -rf "$HOME/bin/oh-my-posh"
+if [ -d "$HOME/bin/oh-my-posh" ]; then
+    sudo rm -rf "$HOME/bin/oh-my-posh"
+else
+    echo "Oh My Posh ist nicht installiert."
+fi
 
 # Entfernen von Snap und Snap-Paketen
 echo "Entferne Snap und Snap-Pakete..."
-sudo snap remove lolcat
-sudo apt remove -y snapd
+if command -v snap &> /dev/null; then
+    sudo snap remove lolcat || echo "lolcat ist nicht installiert."
+    sudo apt remove -y snapd
+else
+    echo "Snap ist nicht installiert."
+fi
 
 # Entfernen von figlet
 echo "Entferne figlet..."
-sudo apt remove -y figlet
+if dpkg -l | grep -q figlet; then
+    sudo apt remove -y figlet
+else
+    echo "figlet ist nicht installiert."
+fi
 
 # Entfernen von lsd
 echo "Entferne lsd..."
-sudo apt remove -y lsd
+if dpkg -l | grep -q lsd; then
+    sudo apt remove -y lsd
+else
+    echo "lsd ist nicht installiert."
+fi
 
 # Entfernen des geklonten Repositories
 if [ -d "$REPO_DIR" ]; then
     echo "Entferne Repository-Verzeichnis..."
     sudo rm -rf "$REPO_DIR"
+else
+    echo "Das Repository-Verzeichnis existiert nicht."
 fi
 
 # Entfernen der kopierten Dateien
 echo "Entferne kopierte Dateien..."
-sudo rm -f "$POSH_THEME_DIR/wholespace.omp.json"
-sudo rm -f "$FISH_CONFIG_DIR/config.fish"
+if [ -f "$POSH_THEME_DIR/wholespace.omp.json" ]; then
+    sudo rm -f "$POSH_THEME_DIR/wholespace.omp.json"
+else
+    echo "Die Datei $POSH_THEME_DIR/wholespace.omp.json existiert nicht."
+fi
+
+if [ -f "$FISH_CONFIG_DIR/config.fish" ]; then
+    sudo rm -f "$FISH_CONFIG_DIR/config.fish"
+else
+    echo "Die Datei $FISH_CONFIG_DIR/config.fish existiert nicht."
+fi
 
 # Entfernen der Verzeichnisse, wenn sie leer sind
-sudo rmdir "$POSH_THEME_DIR" 2>/dev/null
-sudo rmdir "$FISH_CONFIG_DIR" 2>/dev/null
+if [ -d "$POSH_THEME_DIR" ] && [ -z "$(ls -A $POSH_THEME_DIR)" ]; then
+    sudo rmdir "$POSH_THEME_DIR"
+fi
+
+if [ -d "$FISH_CONFIG_DIR" ] && [ -z "$(ls -A $FISH_CONFIG_DIR)" ]; then
+    sudo rmdir "$FISH_CONFIG_DIR"
+fi
 
 echo "Deinstallation abgeschlossen."
