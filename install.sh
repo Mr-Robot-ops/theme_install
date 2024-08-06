@@ -100,4 +100,4 @@ echo "Installation abgeschlossen."
 
 # Wechsle zu fish und lade die Konfiguration
 echo "Starte fish und lade die Konfiguration..."
-su -c 'fish -c "source ~/.config/fish/config.fish"' root
+fish -c "source /root/.config/fish/config.fish; exec fish"
