@@ -12,6 +12,7 @@ REPO_DIR="/root/repository"
 POSH_THEME_DIR="/root/.poshthemes"
 FISH_CONFIG_DIR="/root/.config/fish"
 POSH_BIN_DIR="/root/bin"  # Benutzerdefiniertes Verzeichnis für oh-my-posh
+FIGLET_FONTS_DIR="/usr/share/figlet"
 
 # Überprüfen, ob Git installiert ist, und falls nicht, installieren
 if ! command -v git &> /dev/null; then
@@ -49,7 +50,15 @@ apt install -y figlet
 
 # lsd installieren
 echo "Installiere lsd..."
-apt install -y lsd
+snap install lsd
+
+# fish installieren
+echo "Installiere fish..."
+apt install -y fish
+
+# fish als Standardshell setzen
+echo "Setze fish als Standardshell..."
+chsh -s /usr/bin/fish
 
 # Repository klonen oder aktualisieren
 if [ -d "$REPO_DIR" ]; then
@@ -77,8 +86,18 @@ mkdir -p "$FISH_CONFIG_DIR"
 cp -f "$REPO_DIR/config.fish" "$FISH_CONFIG_DIR/config.fish"
 echo "config.fish nach $FISH_CONFIG_DIR kopiert."
 
+# figlet-fonts kopieren
+echo "Kopiere figlet-fonts nach $FIGLET_FONTS_DIR..."
+mkdir -p "$FIGLET_FONTS_DIR"  # Stelle sicher, dass das Zielverzeichnis existiert
+cp -r "$REPO_DIR/figlet-fonts"/* "$FIGLET_FONTS_DIR/"
+echo "figlet-fonts nach $FIGLET_FONTS_DIR kopiert."
+
 # Temporäre Dateien und geklontes Repository löschen
 echo "Bereinige temporäre Dateien..."
 rm -rf "$REPO_DIR"
 
 echo "Installation abgeschlossen."
+
+# Wechsle zu fish und lade die Konfiguration
+echo "Starte fish und lade die Konfiguration..."
+su -c 'fish -c "source ~/.config/fish/config.fish"' root
