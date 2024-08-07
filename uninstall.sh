@@ -44,6 +44,14 @@ else
     echo "lsd ist nicht installiert."
 fi
 
+# Entfernen von fish
+echo "Entferne fish..."
+if dpkg -l | grep -q fish; then
+    sudo apt remove -y fish
+else
+    echo "fish ist nicht installiert."
+fi
+
 # Entfernen des geklonten Repositories
 if [ -d "$REPO_DIR" ]; then
     echo "Entferne Repository-Verzeichnis..."
@@ -67,11 +75,11 @@ else
 fi
 
 # Entfernen der Verzeichnisse, wenn sie leer sind
-if [ -d "$POSH_THEME_DIR" ] && [ -z "$(ls -A "$POSH_THEME_DIR")" ]; then
+if [ -d "$POSH_THEME_DIR" ] && [ -z "$(ls -A $POSH_THEME_DIR)" ]; then
     sudo rmdir "$POSH_THEME_DIR"
 fi
 
-if [ -d "$FISH_CONFIG_DIR" ] && [ -z "$(ls -A "$FISH_CONFIG_DIR")" ]; then
+if [ -d "$FISH_CONFIG_DIR" ] && [ -z "$(ls -A $FISH_CONFIG_DIR)" ]; then
     sudo rmdir "$FISH_CONFIG_DIR"
 fi
 
