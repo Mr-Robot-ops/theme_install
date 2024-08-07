@@ -13,6 +13,10 @@ FISH_CONFIG_DIR="/root/.config/fish"
 POSH_BIN_DIR="/root/bin"  # Benutzerdefiniertes Verzeichnis für oh-my-posh
 FIGLET_FONTS_DIR="/usr/share/figlet"
 
+# Wiederherstellen der Standard-Shell auf bash, falls fish entfernt wird
+echo "Setze bash als Standardshell..."
+chsh -s /bin/bash || { echo "Fehler beim Setzen von bash als Standardshell"; exit 1; }
+
 # Entfernen der Oh My Posh-Installation
 echo "Entferne Oh My Posh..."
 if [ -d "$POSH_BIN_DIR" ]; then
