@@ -68,4 +68,4 @@ set -g LC_ALL C.UTF-8
 
 #Alias
 # Alias für lsd mit Optionen, die ähnliche Ausgabe wie ls -ls bieten
-alias ls='lsd -l --size short --total-size'
+alias ls='lsd -l --size short --total-size --sort size'
