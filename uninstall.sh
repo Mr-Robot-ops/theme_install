@@ -7,14 +7,16 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Verzeichnisse und Dateien
-REPO_DIR="$HOME/repository"
-POSH_THEME_DIR="$HOME/.poshthemes"
-FISH_CONFIG_DIR="$HOME/.config/fish"
+REPO_DIR="/root/repository"
+POSH_THEME_DIR="/root/.poshthemes"
+FISH_CONFIG_DIR="/root/.config/fish"
+POSH_BIN_DIR="/root/bin"  # Benutzerdefiniertes Verzeichnis für oh-my-posh
+FIGLET_FONTS_DIR="/usr/share/figlet"
 
 # Entfernen der Oh My Posh-Installation
 echo "Entferne Oh My Posh..."
-if [ -d "$HOME/bin/oh-my-posh" ]; then
-    sudo rm -rf "$HOME/bin/oh-my-posh"
+if [ -d "$POSH_BIN_DIR" ]; then
+    sudo rm -rf "$POSH_BIN_DIR/oh-my-posh"
 else
     echo "Oh My Posh ist nicht installiert."
 fi
@@ -29,8 +31,8 @@ fi
 
 # Entfernen von lsd
 echo "Entferne lsd..."
-if dpkg -l | grep -q lsd; then
-    sudo apt remove -y lsd
+if snap list | grep -q lsd; then
+    sudo snap remove lsd
 else
     echo "lsd ist nicht installiert."
 fi
