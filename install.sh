@@ -35,14 +35,11 @@ if ! grep -q "$POSH_BIN_DIR" /root/.bashrc; then
     source /root/.bashrc
 fi
 
-# Snap installieren
-echo "Installiere Snap..."
-apt update
-apt install -y snapd || { echo "Fehler beim Installieren von Snap"; exit 1; }
-
-# lolcat installieren
+# lolcat installieren und nach /usr/bin kopieren
 echo "Installiere lolcat..."
-snap install lolcat || { echo "Fehler beim Installieren von lolcat"; exit 1; }
+apt update
+apt install -y lolcat || { echo "Fehler beim Installieren von lolcat"; exit 1; }
+cp /usr/games/lolcat /usr/bin/lolcat || { echo "Fehler beim Kopieren von lolcat"; exit 1; }
 
 # figlet installieren
 echo "Installiere figlet..."
@@ -50,7 +47,7 @@ apt install -y figlet || { echo "Fehler beim Installieren von figlet"; exit 1; }
 
 # lsd installieren
 echo "Installiere lsd..."
-snap install lsd --devmode || { echo "Fehler beim Installieren von lsd"; exit 1; }
+apt install -y lsd || { echo "Fehler beim Installieren von lsd"; exit 1; }
 
 # fish installieren und aktualisieren
 echo "Installiere und aktualisiere fish..."
