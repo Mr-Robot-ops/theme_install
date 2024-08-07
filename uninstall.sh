@@ -94,3 +94,6 @@ else
 fi
 
 echo "Deinstallation abgeschlossen."
+
+# Starte eine neue Bash-Sitzung
+exec bash
