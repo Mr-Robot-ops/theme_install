@@ -21,19 +21,17 @@ if ! command -v git &> /dev/null; then
     apt install -y git || { echo "Fehler beim Installieren von Git"; exit 1; }
 fi
 
-# Snap installieren
-echo "Installiere Snap..."
+# lsd installieren (kompilieren)
+echo "Installiere lsd..."
 apt update
-apt install -y snapd
-
-# Snap-Dienst starten
-echo "Starte Snap-Dienst..."
-systemctl start snapd
-systemctl enable snapd
-
-# lsd installieren
-echo "Installiere lsd über Snap..."
-snap install lsd --devmode || { echo "Fehler beim Installieren von lsd über Snap"; exit 1; }
+apt install -y build-essential cargo || { echo "Fehler beim Installieren von Abhängigkeiten für lsd"; exit 1; }
+git clone https://github.com/Peltoche/lsd.git /tmp/lsd || { echo "Fehler beim Klonen von lsd"; exit 1; }
+cd /tmp/lsd
+cargo build --release || { echo "Fehler beim Kompilieren von lsd"; exit 1; }
+cp target/release/lsd /usr/local/bin/lsd || { echo "Fehler beim Kopieren von lsd"; exit 1; }
+cd -
+rm -rf /tmp/lsd
+echo "lsd erfolgreich installiert."
 
 # Verzeichnis für oh-my-posh erstellen, falls es nicht existiert
 mkdir -p "$POSH_BIN_DIR"
