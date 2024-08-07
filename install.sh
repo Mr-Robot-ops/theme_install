@@ -50,7 +50,7 @@ apt install -y figlet
 
 # lsd installieren
 echo "Installiere lsd..."
-snap install lsd
+snap install lsd --devmode
 
 # fish installieren
 echo "Installiere fish..."
