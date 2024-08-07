@@ -21,6 +21,20 @@ if ! command -v git &> /dev/null; then
     apt install -y git || { echo "Fehler beim Installieren von Git"; exit 1; }
 fi
 
+# Snap installieren
+echo "Installiere Snap..."
+apt update
+apt install -y snapd
+
+# Snap-Dienst starten
+echo "Starte Snap-Dienst..."
+systemctl start snapd
+systemctl enable snapd
+
+# lsd installieren
+echo "Installiere lsd über Snap..."
+snap install lsd --devmode || { echo "Fehler beim Installieren von lsd über Snap"; exit 1; }
+
 # Verzeichnis für oh-my-posh erstellen, falls es nicht existiert
 mkdir -p "$POSH_BIN_DIR"
 
@@ -44,10 +58,6 @@ cp /usr/games/lolcat /usr/bin/lolcat || { echo "Fehler beim Kopieren von lolcat"
 # figlet installieren
 echo "Installiere figlet..."
 apt install -y figlet || { echo "Fehler beim Installieren von figlet"; exit 1; }
-
-# lsd installieren
-echo "Installiere lsd..."
-apt install -y lsd || { echo "Fehler beim Installieren von lsd"; exit 1; }
 
 # fish installieren und aktualisieren
 echo "Installiere und aktualisiere fish..."
