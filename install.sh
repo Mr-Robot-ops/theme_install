@@ -52,8 +52,10 @@ apt install -y figlet || { echo "Fehler beim Installieren von figlet"; exit 1; }
 echo "Installiere lsd..."
 snap install lsd --devmode || { echo "Fehler beim Installieren von lsd"; exit 1; }
 
-# fish installieren
-echo "Installiere fish..."
+# fish installieren und aktualisieren
+echo "Installiere und aktualisiere fish..."
+apt-add-repository -y ppa:fish-shell/release-3
+apt update
 apt install -y fish || { echo "Fehler beim Installieren von fish"; exit 1; }
 
 # fish als Standardshell setzen
