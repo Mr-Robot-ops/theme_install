@@ -19,15 +19,6 @@ else
     echo "Oh My Posh ist nicht installiert."
 fi
 
-# Entfernen von Snap und Snap-Paketen
-echo "Entferne Snap und Snap-Pakete..."
-if command -v snap &> /dev/null; then
-    sudo snap remove lolcat || echo "lolcat ist nicht installiert."
-    sudo apt remove -y snapd
-else
-    echo "Snap ist nicht installiert."
-fi
-
 # Entfernen von figlet
 echo "Entferne figlet..."
 if dpkg -l | grep -q figlet; then
@@ -50,6 +41,14 @@ if dpkg -l | grep -q fish; then
     sudo apt remove -y fish
 else
     echo "fish ist nicht installiert."
+fi
+
+# Entfernen von lolcat
+echo "Entferne lolcat..."
+if dpkg -l | grep -q lolcat; then
+    sudo apt remove -y lolcat
+else
+    echo "lolcat ist nicht installiert."
 fi
 
 # Entfernen des geklonten Repositories
@@ -81,6 +80,15 @@ fi
 
 if [ -d "$FISH_CONFIG_DIR" ] && [ -z "$(ls -A $FISH_CONFIG_DIR)" ]; then
     sudo rmdir "$FISH_CONFIG_DIR"
+fi
+
+# Entfernen des Fish-PPA
+echo "Entferne das Fish PPA..."
+if [ -f /etc/apt/sources.list.d/fish-shell-ubuntu-release-3-jammy.list ]; then
+    sudo rm /etc/apt/sources.list.d/fish-shell-ubuntu-release-3-jammy.list
+    sudo apt update
+else
+    echo "Das Fish PPA ist nicht vorhanden."
 fi
 
 echo "Deinstallation abgeschlossen."
